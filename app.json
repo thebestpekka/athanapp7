@@ -1,0 +1,76 @@
+{
+  "expo": {
+    "name": "MyAthanApp",
+    "slug": "myathanapp",
+    "version": "1.6.2",
+    "runtimeVersion": {
+      "policy": "fingerprint"
+    },
+    "scheme": "myathanapp",
+    "jsEngine": "hermes",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "athan.app.pekka",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/android-icon-background.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "athan.app.pekka",
+      "permissions": [
+        "SCHEDULE_EXACT_ALARM",
+        "USE_EXACT_ALARM",
+        "RECEIVE_BOOT_COMPLETED"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "backgroundColor": "#003437",
+      "display": "standalone",
+      "themeColor": "#003437",
+      "startUrl": "/"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b4c89c85-00d1-4183-9ce3-c5b4a7634d0b"
+      }
+    },
+   "updates": {
+  "url": "https://u.expo.dev/b4c89c85-00d1-4183-9ce3-c5b4a7634d0b",
+  "checkAutomatically": "ON_ERROR_RECOVERY",
+  "requestHeaders": {
+    "expo-channel-name": "preview"
+  }
+},
+   "plugins": [
+      "expo-sqlite",
+      "expo-background-task",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "extraMavenRepos": [
+              "../../node_modules/@notifee/react-native/android/libs"
+            ]
+          }
+        }
+      ],
+      "./withGraddleSettings.js"
+    ]
+  }
+}
