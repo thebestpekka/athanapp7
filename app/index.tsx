@@ -4,7 +4,7 @@ import { View, ActivityIndicator, Text, Alert, AppState } from 'react-native';
 import * as Updates from 'expo-updates';
 import { initServerLogger, uploadCurrentSessionLog } from '../components/services/logs';
 
-import HomePageView from '../components/screens/HomePage/main/index';
+import { AppShell } from '../components/screens/appShell'
 import { initDB, debugDatabase } from '../components/services/sql';
 import {  syncMosqueList } from '../components/services/database';
 import { setupNotifications } from '@/components/services/notifications';
@@ -120,7 +120,7 @@ export default function Index() {
 
   return (
     <>
-      <HomePageView />
+      <AppShell />
     </>
   );
 }

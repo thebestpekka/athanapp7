@@ -51,7 +51,7 @@ export default function MosqueMenuAnimator({ startY, onClose, children }: Mosque
     };
 
     // 4. Interpolations
-    const MENU_TOP_POS = 60;
+    const MENU_TOP_POS = 40;
     const MENU_HEIGHT = 650;
 
     const boxStyle = useAnimatedStyle(() => ({

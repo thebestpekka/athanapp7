@@ -47,16 +47,16 @@ export default function PrayerList({ prayers }: { prayers: any }) {
 
 const styles = StyleSheet.create({
   container: { paddingBottom: hp(10) },
-  morningBlock: { gap: hp(5), marginBottom: hp(5) },
+  morningBlock: { gap: hp(2), marginBottom: hp(5) },
   sunriseRow: { 
     flexDirection: 'row', justifyContent: 'space-between', 
     paddingVertical: hp(2), marginHorizontal: hp(45),
   },
   sunriseText: { color: '#80cbc4', fontSize: hp(14), fontWeight: '600' },
-  prayerList: { gap: hp(8) },
+  prayerList: { gap: hp(10) },
   card: {
     backgroundColor: 'rgba(20, 90, 85, 0.4)', borderRadius: hp(15),
-    paddingVertical: hp(6), marginHorizontal: hp(5),
+    paddingVertical: hp(2.5), marginHorizontal: hp(5),
     borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   activeCard: { backgroundColor: 'rgba(77, 182, 172, 0.15)', borderColor: 'rgba(77, 182, 172, 0.4)' },

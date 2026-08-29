@@ -3,12 +3,12 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
 import React, { useState, useEffect } from 'react';
 import Constants from 'expo-constants';
-import { update } from '../components/services/supabase'; // Adjust your path
+import { TouchableOpacity, View } from 'react-native';
+import { useNavigation, useRouter } from 'expo-router';
+import { DrawerActions } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
+import { update } from '../components/services/supabase';
 import ForceUpdateScreen from '../components/screens/other/forceUpdater';
-
-
-
-
 
 export default function Layout() {
   const [updateUrl, setUpdateUrl] = useState<string | null>(null);
@@ -17,7 +17,6 @@ export default function Layout() {
   useEffect(() => {
     async function checkVersion() {
       try {
-        // 1. Get current version from app.json
         const isVersionOlder = (current: string, required: string) => {
           const v1 = current.split('.').map(Number);
           const v2 = required.split('.').map(Number);
@@ -29,7 +28,6 @@ export default function Layout() {
           }
           return false;
         };
-        // Inside your checkVersion function:
         const currentVersion = Constants.expoConfig?.version || "1.6.0";
         const data = await update();
         if (data) {
@@ -47,27 +45,45 @@ export default function Layout() {
   }, []);
 
   if (checkingVersion) return null;
+  if (updateUrl) return <ForceUpdateScreen updateUrl={updateUrl} />;
 
-  if (updateUrl) {
-    return <ForceUpdateScreen updateUrl={updateUrl} />;
-  }
+  // Custom left side — hamburger + settings side by side
+  const HeaderLeft = () => {
+    const navigation = useNavigation();
+    const router = useRouter();
 
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 8 }}>
+        {/* Hamburger — opens the drawer */}
+        <TouchableOpacity
+          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+          style={{ padding: 8 }}
+        >
+          <Ionicons name="menu" size={26} color="#fff" />
+        </TouchableOpacity>
+
+        {/* Settings — right next to it */}
+        <TouchableOpacity
+          onPress={() => router.push('/screens/settings')}
+          style={{ padding: 8 }}
+        >
+          <Ionicons name="settings-outline" size={22} color="#fff" />
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Drawer screenOptions={{
-        // This styles the top bar (where the hamburger is)
-        headerStyle: { backgroundColor: 'black' },
-        headerTintColor: '#fff', // Color of the hamburger icon and title
+        headerStyle: { backgroundColor: '#00383C' },
+        headerTintColor: '#fff',
         headerTitle: "My Athan",
-        drawerStyle: {
-          width: '65%', // Reduced width (Default is usually ~280-300)
-          backgroundColor: '#fff', // You can also change the menu color here
-        }, // The text in the middle
+        drawerStyle: { width: '65%', backgroundColor: '#fff' },
+        // Replace the default hamburger with our custom left side
+        headerLeft: () => <HeaderLeft />,
       }}>
 
-
-        {/*  1. Home Page  */}
         <Drawer.Screen
           name="index"
           options={{
@@ -76,15 +92,34 @@ export default function Layout() {
           }}
         />
 
-        {/* 2.  Notifications Page */}
         <Drawer.Screen
-          name="screens/notifications"
+          name="screens/settings"
           options={{
-            drawerLabel: "Notifications", // What user sees in the menu
-            title: "Settings",            // Title at top of screen
+            drawerLabel: "Hidden",
+            title: "Hidden",
+            drawerItemStyle: { display: 'none' },
           }}
         />
 
+        <Drawer.Screen
+          name="screens/notifications"
+          options={{
+            drawerLabel: "Notifications",
+            title: "Settings",
+            // Hide settings icon when already on settings
+            headerLeft: () => {
+              const navigation = useNavigation();
+              return (
+                <TouchableOpacity
+                  onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+                  style={{ padding: 8, marginLeft: 8 }}
+                >
+                  <Ionicons name="menu" size={26} color="#fff" />
+                </TouchableOpacity>
+              );
+            },
+          }}
+        />
 
       </Drawer>
     </GestureHandlerRootView>

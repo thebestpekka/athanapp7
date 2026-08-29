@@ -36,7 +36,7 @@ export default function NextPrayerInfo({ prayers }: NextPrayerInfoProps) {
 
       <View style={styles.headerImageContainer}>
         <Image 
-          source={require('../../../../assets/mine/tom3.webp')} 
+          source={require('../../../../assets/mine/jerry3.webp')} 
           style={styles.headerImage as ImageStyle} resizeMode="cover"
         />
         <View style={styles.imageOverlay} />
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   headerCard: {
     backgroundColor: 'rgba(20, 90, 85, 0.4)', borderRadius: hp(20),
     borderWidth: 1, borderColor:'rgba(255, 255, 255, 0.1)',
-    height: hp(170), flexDirection: 'row', marginBottom: hp(10), overflow: 'hidden', 
+    height: hp(160), flexDirection: 'row', marginBottom: hp(0), overflow: 'hidden', 
   },
   headerLeft: { 
       flex: 1, padding: hp(15), flexDirection: 'column', 

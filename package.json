@@ -1,13 +1,13 @@
 {
   "name": "myathanapp",
   "main": "index.js",
-  "version": "1.6.0",
+  "version": "1.6.2",
   "scripts": {
     "start:local": "expo start",
     "start:tunnel": "npx expo start --tunnel",
     "start:clear": "npx expo start -c",
     "build:apk": "eas build -p android --profile preview",
-    "build:ios":"eas build -p ios",
+    "build:ios": "eas build -p ios",
     "build:all": "eas build -p all --profile preview",
     "build:global": "npx eas-cli build -p android --profile preview",
     "run:android": "npx expo run:android --variant release",
@@ -19,7 +19,6 @@
     "tools:update": "eas update --branch preview",
     "android": "expo run:android",
     "ios": "expo run:ios"
-
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
