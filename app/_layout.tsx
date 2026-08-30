@@ -14,24 +14,23 @@ export default function Layout() {
   const [updateUrl, setUpdateUrl] = useState<string | null>(null);
   const [checkingVersion, setCheckingVersion] = useState(true);
 
-  useEffect(() => {
+useEffect(() => {
     async function checkVersion() {
       try {
-        const isVersionOlder = (current: string, required: string) => {
-          const v1 = current.split('.').map(Number);
-          const v2 = required.split('.').map(Number);
-          for (let i = 0; i < Math.max(v1.length, v2.length); i++) {
-            const num1 = v1[i] || 0;
-            const num2 = v2[i] || 0;
-            if (num1 < num2) return true;
-            if (num1 > num2) return false;
-          }
-          return false;
-        };
-        const currentVersion = Constants.expoConfig?.version || "1.6.0";
+        // Grab the integer version code depending on the platform (default to 1 if unavailable)
+        const currentVersionCode = 
+          Constants.expoConfig?.android?.versionCode ?? 
+          Number(Constants.expoConfig?.ios?.buildNumber) ?? 
+          1;
+
         const data = await update();
+        
         if (data) {
-          if (isVersionOlder(currentVersion, data.version)) {
+          // Assuming your database/update() function now returns the required version code.
+          // We wrap it in Number() just in case it comes back as a string like "7".
+          const requiredVersionCode = Number(data.version);
+
+          if (currentVersionCode < requiredVersionCode) {
             setUpdateUrl(data.link);
           }
         }

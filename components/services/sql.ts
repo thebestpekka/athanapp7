@@ -73,6 +73,22 @@ export const initDB = () => {
 // 2. Save Mosques
 export const saveMosquesLocally = (mosques: any[]) => {
   db.withTransactionSync(() => {
+    
+    // 1. Delete any mosques that are not in the new incoming list
+    if (mosques.length > 0) {
+      const mosqueNames = mosques.map(m => m.mosque);
+      const placeholders = mosqueNames.map(() => '?').join(',');
+      
+      db.runSync(
+        `DELETE FROM mosques WHERE mosque NOT IN (${placeholders})`, 
+        mosqueNames
+      );
+    } else {
+      // If the incoming list is entirely empty, clear out all local mosques
+      db.runSync(`DELETE FROM mosques`);
+    }
+
+    // 2. Insert or update the active mosques
     mosques.forEach(m => {
       // Check if mosque exists locally to preserve 'isFav' status
       const existing = db.getFirstSync<{ isFav: number }>(

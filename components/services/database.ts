@@ -7,7 +7,7 @@ import {
     saveMosquesLocally,
     getLocalPrayerCount, 
     savePrayersLocally,
-     updatePrayerConfig, 
+    updatePrayerConfig, 
     getLocalPrayerForDate,
     updateSettings,
     deleteOldPrayers,
@@ -23,9 +23,11 @@ export const Settings = () => getSettings();
 export const UpdateSettings =  (currentData: any) =>{
     updateSettings(currentData);
 }
+
 export const UpdateNotiConfig=(prayer: string, config: 'sound' | 'vibrate' | 'mute')=>{
     updatePrayerConfig(prayer,config);
 };
+
 export const syncMosqueList = async () => {
     try {
         const mosques = await fetchMosques();
@@ -37,9 +39,8 @@ export const syncMosqueList = async () => {
     } catch (error) {
         console.error("database: syncMosqueList:  ❌ Error syncing mosques:", error);
     }
-
-    
 };
+
 export const getMosqueList =  () => {
   // 1. (Optional) Sync with cloud to ensure we have the latest mosques
   // await syncMosqueList(); 
@@ -68,6 +69,7 @@ export const getMosqueList =  () => {
     capacity: 0,             // Placeholder
   }));
 };
+
 export const updateMosqueFavs = (name: string ,status:boolean)=>{
  
     updateMosqueFavorite(name , status);
